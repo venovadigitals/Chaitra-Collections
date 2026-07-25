@@ -1,0 +1,902 @@
+/* ==========================================================================
+   Chaitra Collections — Design tokens
+   Palette: Ivory canvas, Oxblood maroon, Antique gold, Peacock teal
+   Type: Yeseva One (display), Cormorant Garamond (accent/italic), Mukta (body)
+   ========================================================================== */
+
+:root {
+  --ivory: #FBF3E7;
+  --ivory-deep: #F3E6D3;
+  --maroon: #6E1423;
+  --maroon-deep: #4A0E18;
+  --gold: #C7962F;
+  --gold-light: #E8C878;
+  --teal: #0B5D5B;
+  --teal-deep: #073F3E;
+  --ink: #2B1B14;
+  --ink-soft: #5A473D;
+  --blush: #E9C6A6;
+  --cream-card: #FFFDF9;
+
+  --font-display: 'Yeseva One', serif;
+  --font-accent: 'Cormorant Garamond', serif;
+  --font-body: 'Mukta', sans-serif;
+
+  --radius-arch: 200px 200px 0 0;
+  --shadow-soft: 0 12px 30px rgba(74, 14, 24, 0.14);
+  --shadow-card: 0 6px 18px rgba(43, 27, 20, 0.10);
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--ivory);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+
+a { color: inherit; text-decoration: none; }
+
+.eyebrow {
+  font-family: var(--font-accent);
+  font-style: italic;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--maroon);
+  font-size: 0.95rem;
+  display: inline-block;
+  margin-bottom: 0.6rem;
+}
+
+h1, h2, h3, .display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  color: var(--maroon-deep);
+  line-height: 1.2;
+  margin: 0;
+}
+
+.container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 clamp(1.2rem, 4vw, 3rem);
+}
+
+/* Focus visibility for keyboard users */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid var(--teal);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}
+
+/* ==========================================================================
+   Signature element: Toran / bunting garland divider
+   A row of triangular festoon flags with a scalloped zari-style edge,
+   used as a recurring motif between sections instead of a plain rule.
+   ========================================================================== */
+
+.toran {
+  width: 100%;
+  height: 46px;
+  display: block;
+  background: var(--ivory);
+}
+
+.toran--maroon { background: var(--maroon-deep); }
+.toran--ivory { background: var(--ivory); }
+
+/* Scalloped zari border strip (repeating arcs), used under headers/cards */
+.zari-border {
+  height: 14px;
+  width: 100%;
+  background-image: radial-gradient(circle at 10px -4px, transparent 10px, var(--gold) 10.5px, var(--gold) 11.5px, transparent 12px);
+  background-size: 20px 20px;
+  background-position: center top;
+  background-repeat: repeat-x;
+  opacity: 0.85;
+}
+
+/* ==========================================================================
+   Top announcement strip
+   ========================================================================== */
+
+.announce-strip {
+  background: var(--maroon-deep);
+  color: var(--gold-light);
+  text-align: center;
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: 0.95rem;
+  letter-spacing: 0.03em;
+  padding: 0.5rem 1rem;
+}
+
+/* ==========================================================================
+   Header / Navigation
+   ========================================================================== */
+
+.site-header {
+  background: var(--ivory);
+  border-bottom: 1px solid var(--blush);
+}
+
+.nav-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0;
+  gap: 1.5rem;
+}
+
+.logo {
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  color: var(--maroon);
+  letter-spacing: 0.01em;
+  display: inline-flex;
+  align-items: center;
+}
+
+.logo span {
+  color: var(--gold);
+}
+
+.logo img {
+  height: 44px;
+  width: auto;
+  display: block;
+}
+
+.footer-brand .logo img {
+  height: 38px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.nav-links a {
+  position: relative;
+  padding: 0.3rem 0;
+  color: var(--ink);
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 0; bottom: -2px;
+  height: 2px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+}
+
+.nav-links a:hover::after,
+.nav-links a[aria-current="page"]::after {
+  transform: scaleX(1);
+}
+
+.nav-icons {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.nav-icons a, .nav-icons button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--maroon-deep);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--maroon-deep);
+  cursor: pointer;
+}
+
+/* Bunting / toran garland under the header */
+.bunting {
+  display: flex;
+  justify-content: center;
+  background: var(--ivory-deep);
+  overflow: hidden;
+  padding-top: 6px;
+}
+
+.bunting svg { display: block; width: 100%; height: 28px; }
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+
+.btn {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  font-size: 0.82rem;
+  padding: 0.95rem 2.2rem;
+  border-radius: 2px;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.btn-primary {
+  background: var(--maroon);
+  color: var(--ivory);
+  border-color: var(--maroon);
+}
+.btn-primary:hover { background: var(--maroon-deep); }
+
+.btn-outline {
+  background: transparent;
+  color: var(--ivory);
+  border-color: var(--gold-light);
+}
+.btn-outline:hover { background: var(--gold-light); color: var(--maroon-deep); }
+
+.btn-outline-dark {
+  background: transparent;
+  color: var(--maroon);
+  border-color: var(--maroon);
+}
+.btn-outline-dark:hover { background: var(--maroon); color: var(--ivory); }
+
+/* ==========================================================================
+   Hero
+   ========================================================================== */
+
+.hero {
+  position: relative;
+  min-height: 78vh;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(120deg, rgba(74,14,24,0.72), rgba(74,14,24,0.30)),
+              url("https://res.cloudinary.com/loxmaejx/image/upload/v1784742007/ChatGPT_Image_Jul_22_2026_11_08_19_PM_uowbv6.png") center/cover no-repeat;
+  background-color: var(--maroon-deep);
+}
+
+.hero-content {
+  max-width: 620px;
+  padding: 3rem clamp(1.2rem, 4vw, 3rem);
+  color: var(--ivory);
+}
+
+.hero-content .eyebrow { color: var(--gold-light); }
+
+.hero-content h1 {
+  color: var(--ivory);
+  font-size: clamp(2.6rem, 5vw, 4rem);
+  margin-bottom: 1rem;
+}
+
+.hero-content p {
+  font-family: var(--font-accent);
+  font-size: 1.3rem;
+  color: var(--ivory-deep);
+  margin-bottom: 2rem;
+  max-width: 480px;
+}
+
+.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+/* ==========================================================================
+   Section headings
+   ========================================================================== */
+
+.section {
+  padding: 5rem 0;
+}
+
+.section-head {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 3rem;
+}
+
+.section-head h2 {
+  font-size: clamp(1.9rem, 3.5vw, 2.6rem);
+  margin-bottom: 0.5rem;
+}
+
+.section-head p {
+  font-family: var(--font-accent);
+  font-size: 1.15rem;
+  color: var(--ink-soft);
+}
+
+/* ==========================================================================
+   Category arches (shop by category)
+   ========================================================================== */
+
+.category-row {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1.6rem;
+}
+
+.category-card {
+  text-align: center;
+  font-weight: 600;
+}
+
+.category-arch {
+  border-radius: var(--radius-arch);
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+  background: var(--blush);
+  box-shadow: var(--shadow-card);
+  margin-bottom: 0.9rem;
+  border: 3px solid var(--ivory);
+  outline: 1px solid var(--gold);
+}
+
+.category-arch img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+
+.category-card span {
+  font-family: var(--font-accent);
+  font-style: italic;
+  color: var(--maroon);
+}
+
+/* ==========================================================================
+   Split banner (festive / campaign)
+   ========================================================================== */
+
+.split-banner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: stretch;
+  background: var(--teal-deep);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.split-banner img {
+  width: 100%; height: 100%; object-fit: cover; min-height: 380px;
+}
+
+.split-banner-copy {
+  padding: 3rem;
+  color: var(--ivory);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.split-banner-copy .eyebrow { color: var(--gold-light); }
+.split-banner-copy h2 { color: var(--ivory); }
+.split-banner-copy p {
+  font-family: var(--font-accent);
+  font-size: 1.15rem;
+  color: var(--ivory-deep);
+  margin: 1rem 0 1.8rem;
+}
+
+/* ==========================================================================
+   Product grid & cards
+   ========================================================================== */
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.8rem;
+}
+
+.product-card {
+  background: var(--cream-card);
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-soft);
+}
+
+.product-media {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  background: var(--ivory-deep);
+  overflow: hidden;
+}
+
+.product-media img { width: 100%; height: 100%; object-fit: cover; }
+
+.product-tag {
+  position: absolute;
+  top: 0.8rem; left: 0.8rem;
+  background: var(--maroon);
+  color: var(--gold-light);
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.7rem;
+  border-radius: 2px;
+}
+
+.product-wishlist {
+  position: absolute;
+  top: 0.7rem; right: 0.7rem;
+  background: rgba(251,243,231,0.9);
+  border: none;
+  border-radius: 50%;
+  width: 34px; height: 34px;
+  cursor: pointer;
+  color: var(--maroon);
+}
+
+.product-info { padding: 1rem 1.1rem 1.3rem; }
+
+.product-info .cat {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-soft);
+}
+
+.product-info h3 {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--ink);
+  margin: 0.3rem 0 0.4rem;
+}
+
+.price-row { display: flex; align-items: baseline; gap: 0.6rem; }
+
+.price-now { font-weight: 700; color: var(--maroon); }
+.price-old { text-decoration: line-through; color: var(--ink-soft); font-size: 0.9rem; }
+.price-off { color: var(--teal); font-size: 0.85rem; font-weight: 600; }
+
+/* ==========================================================================
+   Heritage / brand story strip
+   ========================================================================== */
+
+.heritage {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.heritage-media {
+  position: relative;
+  aspect-ratio: 4/5;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+}
+
+.heritage-media img { width: 100%; height: 100%; object-fit: cover; }
+
+.heritage-copy p {
+  font-size: 1.05rem;
+  color: var(--ink-soft);
+  margin: 1.2rem 0;
+  max-width: 520px;
+}
+
+.heritage-stats {
+  display: flex;
+  gap: 2.5rem;
+  margin-top: 1.5rem;
+}
+
+.heritage-stats div strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  color: var(--maroon);
+}
+
+.heritage-stats div span {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+}
+
+/* ==========================================================================
+   Testimonials
+   ========================================================================== */
+
+.testimonial-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.8rem;
+}
+
+.testimonial-card {
+  background: var(--cream-card);
+  border: 1px solid var(--blush);
+  border-radius: 4px;
+  padding: 2rem;
+}
+
+.testimonial-card p {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--ink);
+  margin: 0 0 1.2rem;
+}
+
+.testimonial-name { font-weight: 700; color: var(--maroon); font-size: 0.95rem; }
+.testimonial-place { font-size: 0.8rem; color: var(--ink-soft); }
+
+/* ==========================================================================
+   Instagram strip
+   ========================================================================== */
+
+.insta-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.8rem;
+}
+
+.insta-grid a {
+  display: block;
+  aspect-ratio: 1/1;
+  overflow: hidden;
+  background: var(--blush);
+}
+
+.insta-grid img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; }
+.insta-grid a:hover img { transform: scale(1.06); }
+
+/* ==========================================================================
+   Newsletter
+   ========================================================================== */
+
+.newsletter {
+  background: var(--maroon-deep);
+  background-image: radial-gradient(circle at 15% 30%, rgba(199,150,47,0.18), transparent 45%),
+                     radial-gradient(circle at 85% 70%, rgba(199,150,47,0.14), transparent 40%);
+  color: var(--ivory);
+  text-align: center;
+  padding: 4.5rem 1.5rem;
+}
+
+.newsletter h2 { color: var(--ivory); margin-bottom: 0.6rem; }
+.newsletter p { font-family: var(--font-accent); font-size: 1.15rem; color: var(--ivory-deep); margin-bottom: 2rem; }
+
+.newsletter-form {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  max-width: 460px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+.newsletter-form input {
+  flex: 1;
+  min-width: 220px;
+  padding: 0.9rem 1.1rem;
+  border: 1.5px solid var(--gold-light);
+  background: transparent;
+  color: var(--ivory);
+  border-radius: 2px;
+  font-family: var(--font-body);
+}
+
+.newsletter-form input::placeholder { color: var(--blush); }
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+
+.site-footer {
+  background: var(--ink);
+  color: var(--ivory-deep);
+  padding: 4rem 0 1.5rem;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr 1.2fr;
+  gap: 2.5rem;
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid rgba(251,243,231,0.15);
+}
+
+.footer-grid h4 {
+  color: var(--gold-light);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 1.1rem;
+}
+
+.footer-grid ul { list-style: none; margin: 0; padding: 0; }
+.footer-grid li { margin-bottom: 0.6rem; font-size: 0.92rem; }
+.footer-grid a:hover { color: var(--gold-light); }
+
+.footer-brand .logo { color: var(--ivory); margin-bottom: 0.8rem; display: inline-block; }
+.footer-brand .logo span { color: var(--gold-light); }
+.footer-brand p { font-size: 0.9rem; color: var(--ivory-deep); max-width: 260px; }
+
+.footer-social { display: flex; gap: 0.8rem; margin-top: 1.2rem; }
+.footer-social a {
+  width: 36px; height: 36px;
+  border: 1px solid rgba(251,243,231,0.3);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem;
+}
+.footer-social a:hover { background: var(--gold-light); color: var(--ink); border-color: var(--gold-light); }
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1.5rem;
+  font-size: 0.82rem;
+  color: rgba(251,243,231,0.6);
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.footer-bottom-links { display: flex; gap: 1.4rem; }
+
+/* ==========================================================================
+   Breadcrumb / filter bar (shop page)
+   ========================================================================== */
+
+.page-banner {
+  background: var(--ivory-deep);
+  padding: 3rem 0 2rem;
+  text-align: center;
+}
+
+.breadcrumb {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  margin-bottom: 0.6rem;
+}
+.breadcrumb a { color: var(--maroon); font-weight: 600; }
+
+.shop-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+.filter-panel {
+  background: var(--cream-card);
+  border: 1px solid var(--blush);
+  border-radius: 4px;
+  padding: 1.6rem;
+  position: sticky;
+  top: 1.5rem;
+}
+
+.filter-group { margin-bottom: 1.6rem; }
+.filter-group:last-child { margin-bottom: 0; }
+
+.filter-group h4 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--maroon);
+  margin-bottom: 0.8rem;
+}
+
+.filter-option {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.92rem;
+  margin-bottom: 0.55rem;
+  color: var(--ink-soft);
+}
+
+.swatch-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.swatch {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  border: 2px solid var(--ivory);
+  outline: 1px solid var(--blush);
+  cursor: pointer;
+}
+
+.shop-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.8rem;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+
+.shop-toolbar select {
+  font-family: var(--font-body);
+  border: 1px solid var(--blush);
+  background: var(--cream-card);
+  padding: 0.5rem 0.8rem;
+  border-radius: 2px;
+}
+
+.shop-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.8rem;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 3rem;
+}
+
+.pagination a {
+  width: 38px; height: 38px;
+  border: 1px solid var(--blush);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.9rem;
+}
+
+.pagination a[aria-current="page"] {
+  background: var(--maroon);
+  color: var(--ivory);
+  border-color: var(--maroon);
+}
+
+/* ==========================================================================
+   Product detail page
+   ========================================================================== */
+
+.product-detail {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3.5rem;
+}
+
+.pd-gallery-main {
+  aspect-ratio: 3/4;
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--ivory-deep);
+  margin-bottom: 1rem;
+}
+.pd-gallery-main img { width: 100%; height: 100%; object-fit: cover; }
+
+.pd-gallery-thumbs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.7rem; }
+.pd-gallery-thumbs div {
+  aspect-ratio: 3/4;
+  border-radius: 3px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  cursor: pointer;
+  background: var(--ivory-deep);
+}
+.pd-gallery-thumbs div.active { border-color: var(--gold); }
+.pd-gallery-thumbs img { width: 100%; height: 100%; object-fit: cover; }
+
+.pd-info .cat { text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.8rem; color: var(--ink-soft); }
+.pd-info h1 { font-size: 2.1rem; margin: 0.5rem 0 0.7rem; }
+
+.pd-rating { display: flex; align-items: center; gap: 0.5rem; color: var(--gold); margin-bottom: 1rem; font-size: 0.9rem; }
+.pd-rating span { color: var(--ink-soft); }
+
+.pd-price { display: flex; align-items: baseline; gap: 0.8rem; margin-bottom: 1.5rem; }
+.pd-price .price-now { font-size: 1.5rem; }
+.pd-tax-note { font-size: 0.8rem; color: var(--ink-soft); margin-top: -1rem; margin-bottom: 1.5rem; }
+
+.pd-block { margin-bottom: 1.6rem; }
+.pd-block h4 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--maroon); margin-bottom: 0.7rem; }
+
+.size-row { display: flex; gap: 0.7rem; flex-wrap: wrap; }
+.size-pill {
+  width: 44px; height: 44px;
+  border: 1.5px solid var(--blush);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem; font-weight: 600;
+  cursor: pointer;
+  background: var(--cream-card);
+}
+.size-pill.active, .size-pill:hover { border-color: var(--maroon); color: var(--maroon); }
+
+.pd-actions { display: flex; gap: 1rem; margin: 2rem 0; flex-wrap: wrap; }
+.pd-actions .btn { flex: 1; min-width: 200px; text-align: center; }
+
+.pd-usps { display: flex; flex-direction: column; gap: 0.8rem; font-size: 0.9rem; color: var(--ink-soft); border-top: 1px solid var(--blush); padding-top: 1.5rem; }
+
+.accordion { border-top: 1px solid var(--blush); }
+.accordion-item { border-bottom: 1px solid var(--blush); }
+.accordion-item summary {
+  padding: 1rem 0;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--maroon-deep);
+  display: flex;
+  justify-content: space-between;
+}
+.accordion-item p, .accordion-item ul { color: var(--ink-soft); padding-bottom: 1rem; margin: 0; }
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 1080px) {
+  .category-row { grid-template-columns: repeat(3, 1fr); }
+  .product-grid { grid-template-columns: repeat(2, 1fr); }
+  .shop-grid { grid-template-columns: repeat(2, 1fr); }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .heritage { grid-template-columns: 1fr; }
+  .testimonial-row { grid-template-columns: 1fr; }
+  .insta-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 860px) {
+  .nav-links {
+    display: none;
+    position: absolute;
+    left: 0; right: 0; top: 100%;
+    background: var(--ivory);
+    flex-direction: column;
+    gap: 0;
+    padding: 0.5rem 1.2rem 1rem;
+    border-bottom: 1px solid var(--blush);
+    box-shadow: var(--shadow-card);
+  }
+  .nav-links.nav-links--open { display: flex; }
+  .nav-links li { width: 100%; }
+  .nav-links a { display: block; padding: 0.7rem 0; }
+  .site-header { position: relative; }
+  .nav-toggle { display: block; }
+  .split-banner { grid-template-columns: 1fr; }
+  .split-banner img { min-height: 260px; }
+  .shop-layout { grid-template-columns: 1fr; }
+  .filter-panel { position: static; }
+  .product-detail { grid-template-columns: 1fr; gap: 2rem; }
+}
+
+@media (max-width: 560px) {
+  .category-row { grid-template-columns: repeat(2, 1fr); }
+  .product-grid { grid-template-columns: 1fr 1fr; }
+  .shop-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .insta-grid { grid-template-columns: repeat(2, 1fr); }
+  .hero { min-height: 90vh; }
+}
