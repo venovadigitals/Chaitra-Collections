@@ -6,6 +6,9 @@
 
 -- ---------------------------------------------------------------------------
 -- Products
+-- "image" stays as the single thumbnail used on cards/listing grids
+-- (kept in sync with images[0]). "images" holds the full gallery of
+-- 1-5 photos shown on the product detail page.
 -- ---------------------------------------------------------------------------
 create table if not exists products (
   id          uuid primary key default gen_random_uuid(),
@@ -15,11 +18,19 @@ create table if not exists products (
   sale_price  numeric not null default 0,
   stock       int not null default 0,
   image       text,
+  images      jsonb not null default '[]'::jsonb,
   status      text not null default 'active' check (status in ('active', 'draft')),
   featured    boolean not null default false,
   tag         text default '',
   created_at  timestamptz not null default now()
 );
+
+-- If you already ran an earlier version of this schema, run this instead
+-- of the create table above (safe to run even if the column already
+-- exists). It also backfills "images" from the existing single "image"
+-- column for any products created before this change.
+alter table products add column if not exists images jsonb not null default '[]'::jsonb;
+update products set images = jsonb_build_array(image) where images = '[]'::jsonb and image is not null and image <> '';
 
 -- ---------------------------------------------------------------------------
 -- Customers
