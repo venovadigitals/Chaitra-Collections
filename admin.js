@@ -226,7 +226,11 @@
         document.getElementById('pfPrice').value = p.price;
         document.getElementById('pfSalePrice').value = p.salePrice;
         document.getElementById('pfStock').value = p.stock;
-        document.getElementById('pfImage').value = p.image;
+        var imgs = (p.images && p.images.length ? p.images : (p.image ? [p.image] : []));
+        for (var i = 1; i <= 5; i++) {
+          var el = document.getElementById('pfImage' + i);
+          if (el) el.value = imgs[i - 1] || '';
+        }
         document.getElementById('pfStatus').value = p.status;
         document.getElementById('pfTag').value = p.tag || '';
         document.getElementById('pfFeatured').checked = !!p.featured;
@@ -248,13 +252,21 @@
     var submitBtn = e.target.querySelector('button[type="submit"]');
     if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Saving...'; }
 
+    var images = [];
+    for (var i = 1; i <= 5; i++) {
+      var el = document.getElementById('pfImage' + i);
+      var val = el ? el.value.trim() : '';
+      if (val) images.push(val);
+    }
+    if (!images.length) images.push('REPLACE_WITH_CLOUDINARY_URL_PRODUCT');
+
     var data = {
       name: document.getElementById('pfName').value.trim(),
       category: document.getElementById('pfCategory').value.trim(),
       price: Number(document.getElementById('pfPrice').value),
       salePrice: Number(document.getElementById('pfSalePrice').value),
       stock: Number(document.getElementById('pfStock').value),
-      image: document.getElementById('pfImage').value.trim() || 'REPLACE_WITH_CLOUDINARY_URL_PRODUCT',
+      images: images,
       status: document.getElementById('pfStatus').value,
       tag: document.getElementById('pfTag').value.trim(),
       featured: document.getElementById('pfFeatured').checked
