@@ -452,6 +452,9 @@
       return '<li><span>' + escapeHtml(i.name) + ' &times; ' + i.qty + '</span><span>' + formatRs(i.price * i.qty) + '</span></li>';
     }).join('') +
       '<li><span><strong>Customer</strong></span><span>' + escapeHtml(o.customer) + '</span></li>' +
+      (o.customerPhone ? '<li><span><strong>Phone</strong></span><span>' + escapeHtml(o.customerPhone) + '</span></li>' : '') +
+      (o.shippingAddress ? '<li><span><strong>Address</strong></span><span>' + escapeHtml(o.shippingAddress) + '</span></li>' : '') +
+      ((o.shippingCity || o.shippingPincode) ? '<li><span><strong>City / Pincode</strong></span><span>' + escapeHtml(o.shippingCity) + (o.shippingCity && o.shippingPincode ? ' &ndash; ' : '') + escapeHtml(o.shippingPincode) + '</span></li>' : '') +
       '<li><span><strong>Order date</strong></span><span>' + escapeHtml(o.date) + '</span></li>' +
       '<li><span><strong>Total</strong></span><span>' + formatRs(o.total) + '</span></li>';
     document.getElementById('orderViewModal').classList.add('active');
