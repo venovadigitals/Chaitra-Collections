@@ -12,19 +12,11 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // Product gallery thumbnail switch (product.html)
-  var thumbs = document.querySelectorAll('.pd-gallery-thumbs [data-full]');
-  var mainImage = document.querySelector('.pd-gallery-main img');
-  if (thumbs.length && mainImage) {
-    thumbs.forEach(function (thumb) {
-      thumb.addEventListener('click', function () {
-        thumbs.forEach(function (t) { t.classList.remove('active'); });
-        thumb.classList.add('active');
-        var newSrc = thumb.getAttribute('data-full');
-        mainImage.setAttribute('src', newSrc);
-      });
-    });
-  }
+  // Product gallery thumbnail switching (product.html) is wired up in
+  // product.js itself, right after the gallery is rendered — the
+  // thumbnails don't exist in the DOM yet when this file's
+  // DOMContentLoaded listener runs, since they're built dynamically
+  // from the product's data.
 
   // Size pill selection (product.html)
   var sizePills = document.querySelectorAll('.size-pill');
