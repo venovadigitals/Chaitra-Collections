@@ -51,14 +51,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  // Wishlist toggle on product cards
-  var wishlistButtons = document.querySelectorAll('.product-wishlist');
-  wishlistButtons.forEach(function (btn) {
-    btn.addEventListener('click', function (e) {
-      e.preventDefault();
-      btn.classList.toggle('is-active');
-      btn.style.color = btn.classList.contains('is-active') ? '#6E1423' : '';
-    });
-  });
+  // Wishlist toggle on product cards is handled globally by wishlist.js
+  // (it uses event delegation, so it works for cards rendered dynamically
+  // by home.js / shop.js / product.js after this script runs).
 
 });
