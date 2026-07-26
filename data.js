@@ -122,6 +122,9 @@ window.ChaitraData = (function () {
   // -----------------------------------------------------------------
 
   function normalizeProduct(row) {
+    var images = Array.isArray(row.images) && row.images.length
+      ? row.images
+      : (row.image ? [row.image] : []);
     return {
       id: row.id,
       name: row.name,
@@ -129,7 +132,8 @@ window.ChaitraData = (function () {
       price: Number(row.price),
       salePrice: Number(row.sale_price),
       stock: Number(row.stock),
-      image: row.image,
+      image: images[0] || row.image || '',
+      images: images,
       status: row.status,
       featured: !!row.featured,
       tag: row.tag || ''
@@ -137,13 +141,16 @@ window.ChaitraData = (function () {
   }
 
   function denormalizeProduct(p) {
+    var images = (p.images || []).map(function (s) { return (s || '').trim(); }).filter(Boolean);
+    if (!images.length && p.image) images = [p.image];
     return {
       name: p.name,
       category: p.category,
       price: p.price,
       sale_price: p.salePrice,
       stock: p.stock,
-      image: p.image,
+      image: images[0] || '',
+      images: images,
       status: p.status,
       featured: !!p.featured,
       tag: p.tag || ''
