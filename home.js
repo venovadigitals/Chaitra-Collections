@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   var MAX_PRODUCTS = 8;
 
   function productCardHtml(p) {
+    var link = 'product.html?id=' + encodeURIComponent(p.id);
     var discount = p.salePrice > p.price
       ? Math.round(((p.salePrice - p.price) / p.salePrice) * 100) + '% off'
       : '';
@@ -32,12 +33,12 @@ document.addEventListener('DOMContentLoaded', async function () {
       '<article class="product-card">' +
         '<div class="product-media">' +
           tagHtml +
-          '<button class="product-wishlist" aria-label="Add to wishlist">&hearts;</button>' +
-          '<a href="product.html"><img src="' + Data.escapeHtml(p.image) + '" alt="' + Data.escapeHtml(p.name) + '"></a>' +
+          '<button class="product-wishlist" data-id="' + p.id + '" aria-label="Add to wishlist">&hearts;</button>' +
+          '<a href="' + link + '"><img src="' + Data.escapeHtml(p.image) + '" alt="' + Data.escapeHtml(p.name) + '"></a>' +
         '</div>' +
         '<div class="product-info">' +
           '<span class="cat">' + Data.escapeHtml(p.category) + '</span>' +
-          '<h3><a href="product.html">' + Data.escapeHtml(p.name) + '</a></h3>' +
+          '<h3><a href="' + link + '">' + Data.escapeHtml(p.name) + '</a></h3>' +
           '<div class="price-row">' +
             '<span class="price-now">' + Data.formatRs(p.price) + '</span>' +
             oldPriceHtml +
@@ -62,14 +63,8 @@ document.addEventListener('DOMContentLoaded', async function () {
 
       container.innerHTML = products.map(productCardHtml).join('');
 
-      // Re-attach wishlist toggle behaviour to the freshly rendered cards
-      container.querySelectorAll('.product-wishlist').forEach(function (btn) {
-        btn.addEventListener('click', function (e) {
-          e.preventDefault();
-          btn.classList.toggle('is-active');
-          btn.style.color = btn.classList.contains('is-active') ? '#6E1423' : '';
-        });
-      });
+      // Wishlist state (heart fill + count) is handled globally by wishlist.js
+      if (window.ChaitraWishlist) window.ChaitraWishlist.sync();
     });
   }
 
