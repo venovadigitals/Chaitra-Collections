@@ -234,9 +234,13 @@
           <input type="number" id="pfStock" min="0" required>
         </div>
         <div class="admin-field">
-          <label for="pfImage">Product Image URL (Cloudinary)</label>
-          <input type="text" id="pfImage" placeholder="https://res.cloudinary.com/your-cloud/image/upload/...">
-          <p class="admin-form-hint">Paste the Cloudinary link once the image is uploaded there.</p>
+          <label>Product Images (Cloudinary URLs)</label>
+          <p class="admin-form-hint" style="margin: 0 0 0.6rem;">Add 1 primary photo plus up to 4 more angles. Image 1 is used as the thumbnail everywhere on the storefront (cards, search, cart).</p>
+          <input type="text" id="pfImage1" placeholder="Image 1 URL &mdash; primary, required" style="margin-bottom: 0.6rem;" required>
+          <input type="text" id="pfImage2" placeholder="Image 2 URL (optional)" style="margin-bottom: 0.6rem;">
+          <input type="text" id="pfImage3" placeholder="Image 3 URL (optional)" style="margin-bottom: 0.6rem;">
+          <input type="text" id="pfImage4" placeholder="Image 4 URL (optional)" style="margin-bottom: 0.6rem;">
+          <input type="text" id="pfImage5" placeholder="Image 5 URL (optional)">
         </div>
         <div class="admin-form-row">
           <div class="admin-field">
