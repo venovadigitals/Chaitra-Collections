@@ -156,6 +156,10 @@ window.ChaitraData = (function () {
       orderNumber: row.order_number || row.id,
       customerEmail: row.customer_email,
       customer: row.customer_name,
+      customerPhone: row.customer_phone || '',
+      shippingAddress: row.shipping_address || '',
+      shippingCity: row.shipping_city || '',
+      shippingPincode: row.shipping_pincode || '',
       date: row.order_date,
       items: row.items || [],
       total: Number(row.total),
@@ -198,6 +202,14 @@ window.ChaitraData = (function () {
     var res = await c.from('products').select('*').order('created_at', { ascending: false });
     if (res.error) { console.error(res.error); return []; }
     return (res.data || []).map(normalizeProduct);
+  }
+
+  async function getProductById(id) {
+    var c = client();
+    if (!c || !id) return null;
+    var res = await c.from('products').select('*').eq('id', id).maybeSingle();
+    if (res.error) { console.error(res.error); return null; }
+    return res.data ? normalizeProduct(res.data) : null;
   }
 
   async function addProduct(p) {
@@ -244,6 +256,26 @@ window.ChaitraData = (function () {
     return true;
   }
 
+  async function addOrder(order) {
+    var c = client();
+    if (!c) return null;
+    var res = await c.from('orders').insert({
+      order_number: order.orderNumber,
+      customer_email: order.customerEmail,
+      customer_name: order.customerName,
+      customer_phone: order.customerPhone || '',
+      shipping_address: order.shippingAddress || '',
+      shipping_city: order.shippingCity || '',
+      shipping_pincode: order.shippingPincode || '',
+      order_date: order.date,
+      items: order.items,
+      total: order.total,
+      status: 'pending'
+    }).select();
+    if (res.error) { console.error(res.error); return null; }
+    return res.data && res.data[0] ? normalizeOrder(res.data[0]) : null;
+  }
+
   // -----------------------------------------------------------------
   // Customers
   // -----------------------------------------------------------------
@@ -254,6 +286,16 @@ window.ChaitraData = (function () {
     var res = await c.from('customers').select('*').order('joined_at', { ascending: false });
     if (res.error) { console.error(res.error); return []; }
     return (res.data || []).map(normalizeCustomer);
+  }
+
+  async function upsertCustomer(cust) {
+    var c = client();
+    if (!c) return null;
+    var res = await c.from('customers')
+      .upsert({ name: cust.name, email: cust.email, phone: cust.phone }, { onConflict: 'email' })
+      .select();
+    if (res.error) { console.error(res.error); return null; }
+    return res.data && res.data[0] ? normalizeCustomer(res.data[0]) : null;
   }
 
   // -----------------------------------------------------------------
@@ -323,12 +365,15 @@ window.ChaitraData = (function () {
   return {
     ensureSeeded: ensureSeeded,
     getProducts: getProducts,
+    getProductById: getProductById,
     addProduct: addProduct,
     updateProduct: updateProduct,
     deleteProduct: deleteProduct,
     getOrders: getOrders,
     updateOrderStatus: updateOrderStatus,
+    addOrder: addOrder,
     getCustomers: getCustomers,
+    upsertCustomer: upsertCustomer,
     getCategories: getCategories,
     addCategory: addCategory,
     updateCategory: updateCategory,
