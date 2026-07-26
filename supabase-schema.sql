@@ -35,18 +35,35 @@ create table if not exists customers (
 -- ---------------------------------------------------------------------------
 -- Orders
 -- items is stored as JSON: [{ "name": "...", "qty": 1, "price": 6499 }, ...]
+--
+-- customer_phone / shipping_* capture what the checkout form actually
+-- collects, so a shipping label can be printed straight from an order
+-- without having to cross-reference the customers table (whose phone
+-- number may have changed since this order was placed).
 -- ---------------------------------------------------------------------------
 create table if not exists orders (
-  id              uuid primary key default gen_random_uuid(),
-  order_number    text,
-  customer_email  text,
-  customer_name   text,
-  order_date      date not null default current_date,
-  items           jsonb not null default '[]'::jsonb,
-  total           numeric not null default 0,
-  status          text not null default 'pending' check (status in ('pending', 'shipped', 'delivered', 'cancelled')),
-  created_at      timestamptz not null default now()
+  id                uuid primary key default gen_random_uuid(),
+  order_number      text,
+  customer_email    text,
+  customer_name     text,
+  customer_phone    text,
+  shipping_address  text,
+  shipping_city     text,
+  shipping_pincode  text,
+  order_date        date not null default current_date,
+  items             jsonb not null default '[]'::jsonb,
+  total             numeric not null default 0,
+  status            text not null default 'pending' check (status in ('pending', 'shipped', 'delivered', 'cancelled')),
+  created_at        timestamptz not null default now()
 );
+
+-- If you already ran an earlier version of this schema and the orders
+-- table exists without these columns, run this instead of the create
+-- table above (safe to run even if the columns already exist):
+alter table orders add column if not exists customer_phone   text;
+alter table orders add column if not exists shipping_address text;
+alter table orders add column if not exists shipping_city    text;
+alter table orders add column if not exists shipping_pincode text;
 
 -- ---------------------------------------------------------------------------
 -- Row Level Security
@@ -71,6 +88,11 @@ alter table products enable row level security;
 alter table customers enable row level security;
 alter table orders enable row level security;
 
+drop policy if exists "public read products" on products;
+drop policy if exists "public insert products" on products;
+drop policy if exists "public update products" on products;
+drop policy if exists "public delete products" on products;
+
 create policy "public read products" on products
   for select using (true);
 create policy "public insert products" on products
@@ -80,12 +102,20 @@ create policy "public update products" on products
 create policy "public delete products" on products
   for delete using (true);
 
+drop policy if exists "public read customers" on customers;
+drop policy if exists "public insert customers" on customers;
+drop policy if exists "public update customers" on customers;
+
 create policy "public read customers" on customers
   for select using (true);
 create policy "public insert customers" on customers
   for insert with check (true);
 create policy "public update customers" on customers
   for update using (true);
+
+drop policy if exists "public read orders" on orders;
+drop policy if exists "public insert orders" on orders;
+drop policy if exists "public update orders" on orders;
 
 create policy "public read orders" on orders
   for select using (true);
