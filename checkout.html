@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout | Chaitra Collections</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Yeseva+One&family=Cormorant+Garamond:ital@0;1&family=Mukta:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+<div class="announce-strip">Free shipping across India on orders above Rs. 2,499 &nbsp;|&nbsp; New festive edit now live</div>
+
+<header class="site-header">
+  <div class="container nav-row">
+    <a href="index.html" class="logo">
+      <img src="https://res.cloudinary.com/loxmaejx/image/upload/v1784742708/CHAITRA_COLLECTIONS_fuhpnd.png" alt="Chaitra Collections">
+    </a>
+    <nav aria-label="Primary">
+      <ul class="nav-links">
+        <li><a href="shop.html">New Arrivals</a></li>
+        <li><a href="shop.html?category=sarees">Sarees</a></li>
+        <li><a href="shop.html?category=lehengas">Lehengas</a></li>
+        <li><a href="shop.html?category=kurtas">Kurtas &amp; Suits</a></li>
+        <li><a href="shop.html?category=blouses">Blouses</a></li>
+        <li><a href="shop.html?sale=1">Sale</a></li>
+        <li><a href="about.html">Our Story</a></li>
+      </ul>
+    </nav>
+    <div class="nav-icons">
+      <a href="#" aria-label="Search">Search</a>
+      <a href="#" aria-label="Account">Account</a>
+      <a href="#" aria-label="Wishlist">Wishlist</a>
+      <a href="#" aria-label="Cart">Cart (0)</a>
+    </div>
+    <button class="nav-toggle" aria-label="Open menu" aria-expanded="false">&#9776;</button>
+  </div>
+  <div class="bunting" aria-hidden="true">
+    <svg viewBox="0 0 1200 28" preserveAspectRatio="none">
+      <defs>
+        <pattern id="toranFlag6" width="40" height="28" patternUnits="userSpaceOnUse">
+          <line x1="0" y1="2" x2="40" y2="2" stroke="#C7962F" stroke-width="1.5"/>
+          <polygon points="10,2 30,2 20,24" fill="#6E1423"/>
+          <circle cx="20" cy="4" r="2" fill="#C7962F"/>
+        </pattern>
+      </defs>
+      <rect width="1200" height="28" fill="url(#toranFlag6)"/>
+    </svg>
+  </div>
+</header>
+
+<main>
+
+  <section class="page-banner">
+    <div class="container">
+      <div class="breadcrumb"><a href="index.html">Home</a> / <span>Checkout</span></div>
+      <h1 class="display" style="font-size: clamp(1.8rem, 4vw, 2.6rem);">Checkout</h1>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+
+      <!-- Empty-cart state -->
+      <div id="checkoutEmpty" class="checkout-empty" style="display:none;">
+        <p>Your cart is empty, so there's nothing to check out yet.</p>
+        <a href="shop.html" class="btn btn-primary">Continue Shopping</a>
+      </div>
+
+      <!-- Order confirmed state -->
+      <div id="checkoutSuccess" style="display:none; text-align:center; padding: 2rem 0;">
+        <span class="eyebrow">Thank you!</span>
+        <h2 style="margin-bottom:0.8rem;">Order Placed Successfully</h2>
+        <p style="color: var(--ink-soft); margin-bottom:0.4rem;">Your order number is <strong id="checkoutOrderNumber"></strong>.</p>
+        <p style="color: var(--ink-soft); margin-bottom:1.6rem;">We've sent a confirmation to <span id="checkoutOrderEmail"></span>. You can look up this order any time from the Account link in the header.</p>
+        <a href="shop.html" class="btn btn-primary">Continue Shopping</a>
+      </div>
+
+      <!-- Checkout form + summary -->
+      <div id="checkoutMain" class="checkout-layout">
+
+        <div>
+          <div class="admin-panel" style="background:var(--cream-card); border:1px solid var(--blush); border-radius:5px; padding:1.8rem;">
+            <h2 style="font-family:var(--font-body); font-weight:700; font-size:1.15rem; color:var(--maroon-deep); margin-bottom:1.3rem;">Shipping Details</h2>
+            <form id="checkoutForm">
+              <div class="admin-field">
+                <label for="ckName">Full Name</label>
+                <input type="text" id="ckName" required>
+              </div>
+              <div class="admin-form-row">
+                <div class="admin-field">
+                  <label for="ckEmail">Email</label>
+                  <input type="email" id="ckEmail" required>
+                </div>
+                <div class="admin-field">
+                  <label for="ckPhone">Phone</label>
+                  <input type="tel" id="ckPhone" required>
+                </div>
+              </div>
+              <div class="admin-field">
+                <label for="ckAddress">Delivery Address</label>
+                <textarea id="ckAddress" rows="3" required></textarea>
+              </div>
+              <div class="admin-form-row">
+                <div class="admin-field">
+                  <label for="ckCity">City</label>
+                  <input type="text" id="ckCity" required>
+                </div>
+                <div class="admin-field">
+                  <label for="ckPincode">Pincode</label>
+                  <input type="text" id="ckPincode" required>
+                </div>
+              </div>
+              <button type="submit" class="admin-btn admin-btn-primary" id="checkoutSubmitBtn" style="width:100%; justify-content:center; margin-top:0.6rem;">Place Order</button>
+            </form>
+          </div>
+        </div>
+
+        <div>
+          <div class="admin-panel" style="background:var(--cream-card); border:1px solid var(--blush); border-radius:5px; padding:1.8rem;">
+            <h2 style="font-family:var(--font-body); font-weight:700; font-size:1.15rem; color:var(--maroon-deep); margin-bottom:1rem;">Order Summary</h2>
+            <div id="checkoutItems"></div>
+            <div style="margin-top:0.8rem;">
+              <div class="checkout-totals-row"><span>Subtotal</span><span id="checkoutSubtotal">Rs. 0</span></div>
+              <div class="checkout-totals-row"><span>Shipping</span><span>Free</span></div>
+              <div class="checkout-totals-row grand"><span>Total</span><span id="checkoutTotal">Rs. 0</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">
+          <img src="https://res.cloudinary.com/loxmaejx/image/upload/v1784743714/CHAITRA_COLLECTIONS_1_xwufh3.png" alt="Chaitra Collections">
+        </a>
+        <p>Traditional sarees, lehengas and ethnic wear for the modern Indian woman, woven with heritage and styled for today.</p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/chaitracollections_usa/" aria-label="Instagram">IG</a>
+          <a href="#" aria-label="Facebook">FB</a>
+          <a href="#" aria-label="YouTube">YT</a>
+          <a href="https://api.whatsapp.com/send/?phone=%2B17174917489&text&type=phone_number&app_absent=0&utm_source=ig" aria-label="WhatsApp">WA</a>
+        </div>
+      </div>
+      <div>
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="shop.html?category=sarees">Sarees</a></li>
+          <li><a href="shop.html?category=lehengas">Lehengas</a></li>
+          <li><a href="shop.html?category=kurtas">Kurta Sets</a></li>
+          <li><a href="shop.html?category=blouses">Blouses</a></li>
+          <li><a href="shop.html">Fusion Wear</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Help</h4>
+        <ul>
+          <li><a href="#">Track Your Order</a></li>
+          <li><a href="#">Shipping &amp; Returns</a></li>
+          <li><a href="#">Size Guide</a></li>
+          <li><a href="#">FAQs</a></li>
+          <li><a href="#">Contact Us</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">Our Story</a></li>
+          <li><a href="#">Weaver Partners</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Terms of Use</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Visit Us</h4>
+        <ul>
+          <li>Chaitra Collections</li>
+          <li>Austin, Texas</li>
+          <li>USA</li>
+          <li><a href="mailto:hello@chaitracollections.in">hello@chaitracollections.in</a></li>
+          <li><a href="tel:+17174917489">+1 7174917489</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Chaitra Collections. All rights reserved.</span>
+      <div class="footer-bottom-links">
+        <a href="#">Terms</a>
+        <a href="#">Privacy</a>
+        <a href="#">Sitemap</a>
+        <a href="admin.html">Admin</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="data.js"></script>
+<script src="cart.js"></script>
+<script src="wishlist.js"></script>
+<script src="account.js"></script>
+<script src="checkout.js"></script>
+<script src="search.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
