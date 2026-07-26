@@ -62,6 +62,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   var state = {
     navCategory: params.get('category') || '',
     sale: params.get('sale') === '1',
+    search: params.get('search') || '',
     subCategory: '',   // sidebar category checkbox (exact category string)
     priceRange: '',     // "min-max" from sidebar radios
     sort: 'featured'
@@ -73,6 +74,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     var p = new URLSearchParams();
     if (state.navCategory) p.set('category', state.navCategory);
     if (state.sale) p.set('sale', '1');
+    if (state.search) p.set('search', state.search);
     var qs = p.toString();
     var newUrl = window.location.pathname + (qs ? '?' + qs : '');
     window.history.replaceState({}, '', newUrl);
@@ -82,7 +84,9 @@ document.addEventListener('DOMContentLoaded', async function () {
     if (!navLinks) return;
     navLinks.querySelectorAll('a').forEach(function (a) {
       var isActive;
-      if (state.sale) {
+      if (state.search) {
+        isActive = false;
+      } else if (state.sale) {
         isActive = a.hasAttribute('data-sale');
       } else {
         isActive = a.hasAttribute('data-category') && a.getAttribute('data-category') === state.navCategory;
@@ -95,7 +99,10 @@ document.addEventListener('DOMContentLoaded', async function () {
   function updateHeading() {
     var title = 'All Products';
     var desc = 'Handpicked sarees, lehengas, kurta sets and blouses, sourced directly from weaver clusters across India.';
-    if (state.sale) {
+    if (state.search) {
+      title = 'Search results for \u201c' + state.search + '\u201d';
+      desc = 'Products matching your search across our full collection.';
+    } else if (state.sale) {
       title = 'Sale';
       desc = 'Discounted pieces from our current collection, while stocks last.';
     } else if (state.navCategory && NAV_GROUPS[state.navCategory]) {
@@ -153,6 +160,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   // Rendering
   // ---------------------------------------------------------------
   function productCardHtml(p) {
+    var link = 'product.html?id=' + encodeURIComponent(p.id);
     var discount = p.salePrice > p.price
       ? Math.round(((p.salePrice - p.price) / p.salePrice) * 100) + '% off'
       : '';
@@ -169,12 +177,12 @@ document.addEventListener('DOMContentLoaded', async function () {
       '<article class="product-card">' +
         '<div class="product-media">' +
           tagHtml +
-          '<button class="product-wishlist" aria-label="Add to wishlist">&hearts;</button>' +
-          '<a href="product.html"><img src="' + Data.escapeHtml(p.image) + '" alt="' + Data.escapeHtml(p.name) + '"></a>' +
+          '<button class="product-wishlist" data-id="' + p.id + '" aria-label="Add to wishlist">&hearts;</button>' +
+          '<a href="' + link + '"><img src="' + Data.escapeHtml(p.image) + '" alt="' + Data.escapeHtml(p.name) + '"></a>' +
         '</div>' +
         '<div class="product-info">' +
           '<span class="cat">' + Data.escapeHtml(p.category) + '</span>' +
-          '<h3><a href="product.html">' + Data.escapeHtml(p.name) + '</a></h3>' +
+          '<h3><a href="' + link + '">' + Data.escapeHtml(p.name) + '</a></h3>' +
           '<div class="price-row">' +
             '<span class="price-now">' + Data.formatRs(p.price) + '</span>' +
             oldPriceHtml +
@@ -187,13 +195,8 @@ document.addEventListener('DOMContentLoaded', async function () {
   }
 
   function attachWishlistHandlers() {
-    grid.querySelectorAll('.product-wishlist').forEach(function (btn) {
-      btn.addEventListener('click', function (e) {
-        e.preventDefault();
-        btn.classList.toggle('is-active');
-        btn.style.color = btn.classList.contains('is-active') ? '#6E1423' : '';
-      });
-    });
+    // Wishlist state (heart fill + count) is handled globally by wishlist.js
+    if (window.ChaitraWishlist) window.ChaitraWishlist.sync();
   }
 
   function applyPriceRange(list) {
@@ -225,6 +228,11 @@ document.addEventListener('DOMContentLoaded', async function () {
     // Scope by nav selection first (this also drives the sidebar options).
     var navScoped = allProducts.filter(function (p) {
       if (p.status !== 'active') return false;
+      if (state.search) {
+        var q = state.search.toLowerCase();
+        return (p.name && p.name.toLowerCase().indexOf(q) !== -1) ||
+               (p.category && p.category.toLowerCase().indexOf(q) !== -1);
+      }
       if (state.sale) return p.salePrice > p.price;
       if (state.navCategory) return navGroupOf(p.category) === state.navCategory;
       return true;
@@ -246,7 +254,10 @@ document.addEventListener('DOMContentLoaded', async function () {
     }
 
     if (!visible.length) {
-      grid.innerHTML = '<p style="text-align:center; color: var(--ink-soft); grid-column: 1 / -1; padding: 2rem 0;">No products match these filters yet. Try clearing a filter or check back soon.</p>';
+      var emptyMsg = state.search
+        ? 'No products match \u201c' + Data.escapeHtml(state.search) + '\u201d. Try a different search term.'
+        : 'No products match these filters yet. Try clearing a filter or check back soon.';
+      grid.innerHTML = '<p style="text-align:center; color: var(--ink-soft); grid-column: 1 / -1; padding: 2rem 0;">' + emptyMsg + '</p>';
       return;
     }
 
@@ -288,6 +299,7 @@ document.addEventListener('DOMContentLoaded', async function () {
     var p = new URLSearchParams(window.location.search);
     state.navCategory = p.get('category') || '';
     state.sale = p.get('sale') === '1';
+    state.search = p.get('search') || '';
     state.subCategory = '';
     renderAll();
   });
@@ -299,6 +311,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         e.preventDefault();
         state.sale = a.hasAttribute('data-sale');
         state.navCategory = a.hasAttribute('data-category') ? a.getAttribute('data-category') : '';
+        state.search = '';
         state.subCategory = '';
         state.priceRange = '';
         if (priceFilterGroup) {
