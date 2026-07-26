@@ -543,4 +543,11 @@ table.admin-table {
   .admin-stat-grid { grid-template-columns: 1fr; }
   .admin-content { padding: 1.2rem; }
   .admin-topbar { padding: 1rem 1.2rem; }
+  .admin-topbar-right span { display: none; }
+  .admin-topbar h1 { font-size: 1.15rem; }
+  .admin-toolbar { width: 100%; }
+  .admin-toolbar input[type="search"],
+  .admin-toolbar select { flex: 1; min-width: 0; }
+  .admin-modal-foot { flex-wrap: wrap; }
+  .admin-modal-foot .admin-btn { flex: 1; justify-content: center; }
 }
