@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       Cart.clear();
 
       document.getElementById('checkoutOrderNumber').textContent = savedOrder.orderNumber;
-      document.getElementById('checkoutOrderEmail').textContent = email;
+      document.getElementById('checkoutOrderPhone').textContent = phone;
       mainBox.style.display = 'none';
       successBox.style.display = 'block';
       window.scrollTo({ top: 0, behavior: 'smooth' });
