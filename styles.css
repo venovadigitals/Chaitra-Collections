@@ -131,6 +131,8 @@ input:focus-visible {
 .site-header {
   background: var(--ivory);
   border-bottom: 1px solid var(--blush);
+  position: relative;
+  z-index: 200;
 }
 
 .nav-row {
@@ -891,7 +893,7 @@ input:focus-visible {
     border-bottom: 1px solid var(--blush);
     box-shadow: var(--shadow-card);
   }
-  .nav-links.nav-links--open { display: flex; }
+  .nav-links.nav-links--open { display: flex; z-index: 250; }
   .nav-links li { width: 100%; }
   .nav-links a { display: block; padding: 0.7rem 0; }
   .site-header { position: relative; }
