@@ -50,6 +50,35 @@ document.addEventListener('DOMContentLoaded', async function () {
   img.src = product.image;
   img.alt = product.name;
 
+  // ---------------------------------------------------------------
+  // Gallery thumbnails — only shown when the product has more than
+  // one photo. Wired up right here (rather than relying on a
+  // page-load-time listener) since these elements don't exist until
+  // this async render happens.
+  // ---------------------------------------------------------------
+  var thumbsBox = document.getElementById('pdGalleryThumbs');
+  var galleryImages = (product.images && product.images.length ? product.images : [product.image]).filter(Boolean);
+  if (thumbsBox) {
+    if (galleryImages.length > 1) {
+      thumbsBox.innerHTML = galleryImages.map(function (src, i) {
+        return '<div class="' + (i === 0 ? 'active' : '') + '" data-full="' + Data.escapeHtml(src) + '">' +
+          '<img src="' + Data.escapeHtml(src) + '" alt="' + Data.escapeHtml(product.name) + ' &mdash; photo ' + (i + 1) + '">' +
+        '</div>';
+      }).join('');
+      thumbsBox.style.display = '';
+      thumbsBox.querySelectorAll('[data-full]').forEach(function (thumb) {
+        thumb.addEventListener('click', function () {
+          thumbsBox.querySelectorAll('[data-full]').forEach(function (t) { t.classList.remove('active'); });
+          thumb.classList.add('active');
+          img.src = thumb.getAttribute('data-full');
+        });
+      });
+    } else {
+      thumbsBox.innerHTML = '';
+      thumbsBox.style.display = 'none';
+    }
+  }
+
   document.getElementById('pdPriceNow').textContent = Data.formatRs(product.price);
   var oldEl = document.getElementById('pdPriceOld');
   var offEl = document.getElementById('pdPriceOff');
