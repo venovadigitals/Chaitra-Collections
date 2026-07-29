@@ -88,7 +88,7 @@
         '<article class="product-card">' +
           '<div class="product-media">' +
             '<button class="product-wishlist is-active" data-id="' + p.id + '" aria-label="Remove from wishlist" style="color:#6E1423;">&hearts;</button>' +
-            '<a href="' + link + '"><img src="' + Data.escapeHtml(p.image) + '" alt="' + Data.escapeHtml(p.name) + '"></a>' +
+            '<a href="' + link + '"><img src="' + Data.escapeHtml(Data.optimizeImage(p.image, 600)) + '" alt="' + Data.escapeHtml(p.name) + '" loading="lazy"></a>' +
           '</div>' +
           '<div class="product-info">' +
             '<span class="cat">' + Data.escapeHtml(p.category) + '</span>' +
