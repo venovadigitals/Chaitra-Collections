@@ -369,6 +369,24 @@ window.ChaitraData = (function () {
     });
   }
 
+  // Rewrites a Cloudinary image URL to auto-serve the smallest/fastest
+  // format (WebP/AVIF where supported) and an optimized quality level,
+  // via Cloudinary's f_auto/q_auto transformations. Optionally also caps
+  // the width so large photos aren't sent to small thumbnail slots.
+  // Non-Cloudinary URLs (or ones that already carry a transformation)
+  // are returned untouched.
+  function optimizeImage(url, width) {
+    if (!url || typeof url !== 'string') return url;
+    if (url.indexOf('res.cloudinary.com') === -1) return url;
+    var marker = '/upload/';
+    var idx = url.indexOf(marker);
+    if (idx === -1) return url;
+    var after = url.slice(idx + marker.length);
+    if (/^[a-z_]+_[^/]*f_auto/.test(after) || after.indexOf('f_auto') === 0) return url; // already optimized
+    var transform = 'f_auto,q_auto' + (width ? ',w_' + width : '');
+    return url.slice(0, idx + marker.length) + transform + '/' + after;
+  }
+
   return {
     ensureSeeded: ensureSeeded,
     getProducts: getProducts,
@@ -388,7 +406,8 @@ window.ChaitraData = (function () {
     isLoggedIn: isLoggedIn,
     setLoggedIn: setLoggedIn,
     formatRs: formatRs,
-    escapeHtml: escapeHtml
+    escapeHtml: escapeHtml,
+    optimizeImage: optimizeImage
   };
 
 })();
