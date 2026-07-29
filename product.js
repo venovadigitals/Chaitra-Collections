@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   document.getElementById('pdDetailCategory').textContent = product.category;
 
   var img = document.getElementById('pdImage');
-  img.src = product.image;
+  img.src = Data.optimizeImage(product.image, 900);
   img.alt = product.name;
 
   // ---------------------------------------------------------------
@@ -61,8 +61,8 @@ document.addEventListener('DOMContentLoaded', async function () {
   if (thumbsBox) {
     if (galleryImages.length > 1) {
       thumbsBox.innerHTML = galleryImages.map(function (src, i) {
-        return '<div class="' + (i === 0 ? 'active' : '') + '" data-full="' + Data.escapeHtml(src) + '">' +
-          '<img src="' + Data.escapeHtml(src) + '" alt="' + Data.escapeHtml(product.name) + ' &mdash; photo ' + (i + 1) + '">' +
+        return '<div class="' + (i === 0 ? 'active' : '') + '" data-full="' + Data.escapeHtml(Data.optimizeImage(src, 900)) + '">' +
+          '<img src="' + Data.escapeHtml(Data.optimizeImage(src, 120)) + '" alt="' + Data.escapeHtml(product.name) + ' &mdash; photo ' + (i + 1) + '" loading="lazy">' +
         '</div>';
       }).join('');
       thumbsBox.style.display = '';
@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded', async function () {
       '<article class="product-card">' +
         '<div class="product-media">' +
           '<button class="product-wishlist" data-id="' + p.id + '" aria-label="Add to wishlist">&hearts;</button>' +
-          '<a href="' + link + '"><img src="' + Data.escapeHtml(p.image) + '" alt="' + Data.escapeHtml(p.name) + '"></a>' +
+          '<a href="' + link + '"><img src="' + Data.escapeHtml(Data.optimizeImage(p.image, 600)) + '" alt="' + Data.escapeHtml(p.name) + '" loading="lazy"></a>' +
         '</div>' +
         '<div class="product-info">' +
           '<span class="cat">' + Data.escapeHtml(p.category) + '</span>' +
