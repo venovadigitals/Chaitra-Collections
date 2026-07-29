@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function () {
     var shown = matches.slice(0, 6);
     var itemsHtml = shown.map(function (p) {
       return '<a class="search-result-item" href="product.html?id=' + encodeURIComponent(p.id) + '">' +
-        '<img src="' + Data.escapeHtml(p.image) + '" alt="' + Data.escapeHtml(p.name) + '">' +
+        '<img src="' + Data.escapeHtml(Data.optimizeImage(p.image, 300)) + '" alt="' + Data.escapeHtml(p.name) + '" loading="lazy">' +
         '<span>' +
           '<span class="search-result-name">' + Data.escapeHtml(p.name) + '</span>' +
           '<span class="search-result-cat">' + Data.escapeHtml(p.category) + '</span>' +
