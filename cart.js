@@ -58,7 +58,7 @@
       subtotal += it.product.price * it.qty;
       return (
         '<div class="cart-item" data-id="' + it.product.id + '">' +
-          '<img src="' + _Data.escapeHtml(it.product.image) + '" alt="' + _Data.escapeHtml(it.product.name) + '">' +
+          '<img src="' + _Data.escapeHtml(_Data.optimizeImage(it.product.image, 200)) + '" alt="' + _Data.escapeHtml(it.product.name) + '" loading="lazy">' +
           '<div class="cart-item-info">' +
             '<span class="cart-item-name">' + _Data.escapeHtml(it.product.name) + '</span>' +
             '<span class="cart-item-price">' + _Data.formatRs(it.product.price) + '</span>' +
