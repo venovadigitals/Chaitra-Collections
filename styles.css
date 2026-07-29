@@ -291,7 +291,7 @@ input:focus-visible {
   display: flex;
   align-items: center;
   background: linear-gradient(120deg, rgba(74,14,24,0.72), rgba(74,14,24,0.30)),
-              url("https://res.cloudinary.com/loxmaejx/image/upload/v1784742007/ChatGPT_Image_Jul_22_2026_11_08_19_PM_uowbv6.png") center/cover no-repeat;
+              url("hero-bg.webp") center/cover no-repeat;
   background-color: var(--maroon-deep);
 }
 
