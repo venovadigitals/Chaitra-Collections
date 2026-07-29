@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         '<div class="product-media">' +
           tagHtml +
           '<button class="product-wishlist" data-id="' + p.id + '" aria-label="Add to wishlist">&hearts;</button>' +
-          '<a href="' + link + '"><img src="' + Data.escapeHtml(p.image) + '" alt="' + Data.escapeHtml(p.name) + '"></a>' +
+          '<a href="' + link + '"><img src="' + Data.escapeHtml(Data.optimizeImage(p.image, 600)) + '" alt="' + Data.escapeHtml(p.name) + '" loading="lazy"></a>' +
         '</div>' +
         '<div class="product-info">' +
           '<span class="cat">' + Data.escapeHtml(p.category) + '</span>' +
