@@ -167,7 +167,7 @@
     tbody.innerHTML = filtered.map(function (p) {
       return '<tr>' +
         '<td><div class="admin-product-cell">' +
-          '<div class="admin-table-thumb"><img src="' + escapeHtml(p.image) + '" alt="' + escapeHtml(p.name) + '" onerror="this.style.opacity=0.15"></div>' +
+          '<div class="admin-table-thumb"><img src="' + escapeHtml(Data.optimizeImage(p.image, 100)) + '" alt="' + escapeHtml(p.name) + '" loading="lazy" onerror="this.style.opacity=0.15"></div>' +
           '<div><div class="name">' + escapeHtml(p.name) + '</div></div>' +
         '</div></td>' +
         '<td>' + escapeHtml(p.category) + '</td>' +
