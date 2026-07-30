@@ -11,7 +11,61 @@
 <link rel="preload" as="image" href="hero-bg.webp" media="(min-width: 769px)" fetchpriority="high">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Yeseva+One&family=Cormorant+Garamond:ital@0;1&family=Mukta:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
 <noscript><link href="https://fonts.googleapis.com/css2?family=Yeseva+One&family=Cormorant+Garamond:ital@0;1&family=Mukta:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
-<link rel="stylesheet" href="styles.css">
+<style>
+  :root {
+    --ivory: #FBF3E7; --ivory-deep: #F3E6D3; --maroon: #6E1423; --maroon-deep: #4A0E18;
+    --gold: #C7962F; --gold-light: #E8C878; --teal: #0B5D5B; --teal-deep: #073F3E;
+    --ink: #2B1B14; --ink-soft: #5A473D; --blush: #E9C6A6; --cream-card: #FFFDF9;
+    --font-display: 'Yeseva One', serif; --font-accent: 'Cormorant Garamond', serif; --font-body: 'Mukta', sans-serif;
+    --radius-arch: 200px 200px 0 0; --shadow-soft: 0 12px 30px rgba(74, 14, 24, 0.14); --shadow-card: 0 6px 18px rgba(43, 27, 20, 0.10);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--ivory); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+  .eyebrow { font-family: var(--font-accent); font-style: italic; letter-spacing: 0.08em; text-transform: uppercase; color: var(--maroon); font-size: 0.95rem; display: inline-block; margin-bottom: 0.6rem; }
+  h1, h2, h3, .display { font-family: var(--font-display); font-weight: 400; color: var(--maroon-deep); line-height: 1.2; margin: 0; }
+  .container { max-width: 1240px; margin: 0 auto; padding: 0 clamp(1.2rem, 4vw, 3rem); }
+  .announce-strip { background: var(--maroon-deep); color: var(--gold-light); text-align: center; font-family: var(--font-accent); font-style: italic; font-size: 0.95rem; letter-spacing: 0.03em; padding: 0.5rem 1rem; }
+  .site-header { background: var(--ivory); border-bottom: 1px solid var(--blush); position: relative; z-index: 200; }
+  .nav-row { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; gap: 1.5rem; }
+  .logo { font-family: var(--font-display); font-size: 1.7rem; color: var(--maroon); letter-spacing: 0.01em; display: inline-flex; align-items: center; }
+  .logo span { color: var(--gold); }
+  .logo img { height: 44px; width: auto; display: block; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; margin: 0; padding: 0; font-size: 0.95rem; font-weight: 600; letter-spacing: 0.02em; }
+  .nav-links a { position: relative; padding: 0.3rem 0; color: var(--ink); }
+  .nav-icons { display: flex; align-items: center; gap: 1.2rem; }
+  .nav-icons a, .nav-icons button { background: none; border: none; cursor: pointer; color: var(--maroon-deep); font-family: var(--font-body); font-size: 0.9rem; display: flex; align-items: center; gap: 0.35rem; }
+  .nav-toggle { display: none; background: none; border: none; font-size: 1.6rem; line-height: 1; color: var(--maroon-deep); cursor: pointer; padding: 0.6rem; min-width: 44px; min-height: 44px; margin: -0.6rem; }
+  .bunting { display: flex; justify-content: center; background: var(--ivory-deep); overflow: hidden; padding-top: 6px; }
+  .bunting svg { display: block; width: 100%; height: 28px; }
+  .btn { display: inline-block; font-family: var(--font-body); font-weight: 600; letter-spacing: 0.03em; text-transform: uppercase; font-size: 0.82rem; padding: 0.95rem 2.2rem; border-radius: 2px; cursor: pointer; border: 1.5px solid transparent; }
+  .btn-primary { background: var(--maroon); color: var(--ivory); border-color: var(--maroon); }
+  .btn-outline { background: transparent; color: var(--ivory); border-color: var(--gold-light); }
+  .hero { position: relative; min-height: 78vh; display: flex; align-items: center; background: linear-gradient(120deg, rgba(74,14,24,0.72), rgba(74,14,24,0.30)), url("hero-bg.webp") center/cover no-repeat; background-color: var(--maroon-deep); }
+  .hero-content { max-width: 620px; padding: 3rem clamp(1.2rem, 4vw, 3rem); color: var(--ivory); }
+  .hero-content .eyebrow { color: var(--gold-light); }
+  .hero-content h1 { color: var(--ivory); font-size: clamp(2.6rem, 5vw, 4rem); margin-bottom: 1rem; }
+  .hero-content p { font-family: var(--font-accent); font-size: 1.3rem; color: var(--ivory-deep); margin-bottom: 2rem; max-width: 480px; }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  @media (max-width: 768px) {
+    .hero { background-image: linear-gradient(120deg, rgba(74,14,24,0.72), rgba(74,14,24,0.30)), url("hero-bg-mobile.webp"); }
+  }
+  @media (max-width: 860px) {
+    .nav-row { flex-wrap: wrap; row-gap: 0.6rem; }
+    .logo img { height: 36px; }
+    .nav-icons { gap: 0.9rem; }
+    .nav-links { display: none; position: absolute; left: 0; right: 0; top: 100%; background: var(--ivory); flex-direction: column; gap: 0; padding: 0.5rem 1.2rem 1rem; border-bottom: 1px solid var(--blush); box-shadow: var(--shadow-card); }
+    .nav-links.nav-links--open { display: flex; z-index: 250; }
+    .nav-links li { width: 100%; }
+    .nav-links a { display: block; padding: 0.7rem 0; }
+    .nav-toggle { display: block; }
+  }
+</style>
+<link rel="preload" as="style" href="styles.css">
+<link rel="stylesheet" href="styles.css" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="styles.css"></noscript>
 </head>
 <body>
 
